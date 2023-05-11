@@ -74,4 +74,9 @@ public class OutlookTokenExample {
             response.append(line);
         }
 
-        // Extraer el token de acceso de
+               // Extraer el token de acceso de la respuesta JSON
+        String accessToken = response.toString().split("\"access_token\":\"")[1].split("\"")[0];
+        
+        return accessToken;
+    }
+}

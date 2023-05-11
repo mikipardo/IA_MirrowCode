@@ -1,0 +1,80 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+
+public class OutlookOAuthExample {
+    public static void main(String[] args) {
+        String clientId = "TU_CLIENT_ID";
+        String clientSecret = "TU_CLIENT_SECRET";
+        String redirectUri = "TU_REDIRECT_URI";
+        String scope = "https://outlook.office365.com/.default";
+        
+        try {
+            // Paso 1: Obtener el código de autorización
+            String authorizationCode = getAuthorizationCode(clientId, redirectUri, scope);
+            
+            // Paso 2: Intercambiar el código de autorización por un token de acceso
+            String accessToken = getAccessToken(clientId, clientSecret, redirectUri, authorizationCode);
+            
+            // Paso 3: Utilizar el token de acceso en tu aplicación
+            System.out.println("Token de acceso obtenido: " + accessToken);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    private static String getAuthorizationCode(String clientId, String redirectUri, String scope) throws IOException {
+        String authorizationEndpoint = "https://login.microsoftonline.com/common/oauth2/v2.0/authorize";
+        
+        // Construir la URL de autorización
+        String authorizationUrl = authorizationEndpoint + "?client_id=" + clientId
+                + "&redirect_uri=" + URLEncoder.encode(redirectUri, "UTF-8")
+                + "&response_type=code"
+                + "&scope=" + URLEncoder.encode(scope, "UTF-8");
+        
+        // Abrir la URL de autorización en el navegador
+        System.out.println("Abre la siguiente URL en tu navegador:");
+        System.out.println(authorizationUrl);
+        
+        // Leer el código de autorización ingresado por el usuario
+        System.out.print("Ingresa el código de autorización: ");
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        String authorizationCode = reader.readLine();
+        
+        return authorizationCode;
+    }
+    
+    private static String getAccessToken(String clientId, String clientSecret, String redirectUri, String authorizationCode) throws IOException {
+        String tokenEndpoint = "https://login.microsoftonline.com/common/oauth2/v2.0/token";
+        
+        // Construir la solicitud para obtener el token de acceso
+        String tokenRequest = "client_id=" + clientId
+                + "&client_secret=" + URLEncoder.encode(clientSecret, "UTF-8")
+                + "&redirect_uri=" + URLEncoder.encode(redirectUri, "UTF-8")
+                + "&code=" + authorizationCode
+                + "&grant_type=authorization_code";
+        
+        // Realizar la solicitud POST al endpoint de token
+        URL url = new URL(tokenEndpoint);
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("POST");
+        connection.setDoOutput(true);
+        connection.getOutputStream().write(tokenRequest.getBytes("UTF-8"));
+        
+        // Leer la respuesta del servidor
+        BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+        StringBuilder response = new StringBuilder();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            response.append(line);
+        }
+        
+        // Extraer el token de acceso de la respuesta JSON
+        String accessToken = response.toString().split("\"access_token\":\"")[1].split("\"")[0];
+        
+        return accessToken;
+    }
+}

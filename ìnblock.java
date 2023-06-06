@@ -63,11 +63,29 @@ public class PinBlockGenerator {
 }
 
 /*
+El código que has proporcionado es un ejemplo de generación de un PIN block utilizando el algoritmo AES en modo ECB (Electronic Codebook) sin relleno. Aquí se explica brevemente cómo funciona:
 
-En este ejemplo, se utiliza el algoritmo AES en modo ECB (Electronic Codebook) sin relleno para cifrar los datos. Se formatea el PIN en el formato 4 de ISO 9564-1, donde se añade el valor "04" al inicio del PIN y se completan los dígitos faltantes con "F". Luego, se concatena el PIN formateado con los dígitos más a la derecha del número de cuenta.
+Se definen los datos de entrada, que son el PIN (número de identificación personal), el número de cuenta y la clave de cifrado.
 
-La clave de cifrado se especifica en formato hexadecimal y se utiliza una instancia de SecretKeySpec para crear la clave AES.
+El PIN se formatea según el estándar ISO 9564-1 formato 4. Se agrega "04" al inicio del PIN y se completan los dígitos faltantes con "F". El resultado se almacena en la variable formattedPin.
 
-Después de cifrar los datos, se toman los primeros 8 bytes del resultado cifrado como el PIN block. Por último, se convierten los bytes del PIN block en una cadena hexadecimal y se devuelve
+El PIN formateado se concatena con los dígitos más a la derecha del número de cuenta. El resultado se almacena en la variable data.
 
+La clave de cifrado se convierte de una cadena hexadecimal a un arreglo de bytes.
+
+Se crea un objeto SecretKeySpec utilizando los bytes de la clave y el algoritmo "AES" para representar la clave de cifrado.
+
+Se crea un objeto Cipher utilizando el algoritmo "AES/ECB/NoPadding" para realizar el cifrado en modo ECB y sin relleno.
+
+Se inicializa el objeto Cipher en modo de cifrado y se le pasa la clave de cifrado.
+
+Se cifra la cadena de datos utilizando el método doFinal() del objeto Cipher. El resultado cifrado se almacena en encryptedData.
+
+Se toman los primeros 8 bytes de encryptedData como el PIN block y se almacenan en pinBlockBytes.
+
+Los bytes del PIN block se convierten a una cadena hexadecimal utilizando el método bytesToHexString().
+
+La cadena hexadecimal del PIN block se devuelve como resultado.
+
+En resumen, este código genera un PIN block utilizando el algoritmo AES en modo ECB sin relleno. El PIN block es utilizado en sistemas de pagos electrónicos para proteger la seguridad del PIN durante la transmisión. Cabe destacar que el modo ECB sin relleno puede presentar vulnerabilidades de seguridad y se recomienda utilizar modos de cifrado más seguros, como CBC (Cipher Block Chaining) o GCM (Galois/Counter Mode), junto con un esquema de relleno adecuado para garantizar la seguridad del cifrado.
 */

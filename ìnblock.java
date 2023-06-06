@@ -61,3 +61,13 @@ public class PinBlockGenerator {
         return sb.toString();
     }
 }
+
+/*
+
+En este ejemplo, se utiliza el algoritmo AES en modo ECB (Electronic Codebook) sin relleno para cifrar los datos. Se formatea el PIN en el formato 4 de ISO 9564-1, donde se añade el valor "04" al inicio del PIN y se completan los dígitos faltantes con "F". Luego, se concatena el PIN formateado con los dígitos más a la derecha del número de cuenta.
+
+La clave de cifrado se especifica en formato hexadecimal y se utiliza una instancia de SecretKeySpec para crear la clave AES.
+
+Después de cifrar los datos, se toman los primeros 8 bytes del resultado cifrado como el PIN block. Por último, se convierten los bytes del PIN block en una cadena hexadecimal y se devuelve
+
+*/

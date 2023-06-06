@@ -89,3 +89,20 @@ La cadena hexadecimal del PIN block se devuelve como resultado.
 
 En resumen, este código genera un PIN block utilizando el algoritmo AES en modo ECB sin relleno. El PIN block es utilizado en sistemas de pagos electrónicos para proteger la seguridad del PIN durante la transmisión. Cabe destacar que el modo ECB sin relleno puede presentar vulnerabilidades de seguridad y se recomienda utilizar modos de cifrado más seguros, como CBC (Cipher Block Chaining) o GCM (Galois/Counter Mode), junto con un esquema de relleno adecuado para garantizar la seguridad del cifrado.
 */
+
+/*
+
+
+Cuando se menciona que el PIN formateado se concatena con los dígitos más a la derecha del número de cuenta, significa que se toman los dígitos finales del número de cuenta y se agregan después del PIN formateado.
+
+En el código proporcionado, se utiliza la línea de código:
+
+java
+Copy code
+String data = formattedPin + accountNumber.substring(accountNumber.length() - 12);
+Aquí, formattedPin es el PIN formateado según el estándar ISO 9564-1 formato 4, y accountNumber es el número de cuenta. accountNumber.substring(accountNumber.length() - 12) toma los últimos 12 dígitos del número de cuenta.
+
+Luego, se realiza la concatenación de formattedPin y los últimos 12 dígitos del número de cuenta, y el resultado se almacena en la variable data. Esto significa que el PIN formateado y los dígitos finales del número de cuenta se unen en una sola cadena para su posterior cifrado.
+
+Es importante tener en cuenta que este código asume que el número de cuenta tiene al menos 12 dígitos para poder tomar los dígitos más a la derecha. Si el número de cuenta es más corto, este código puede generar una excepción o producir resultados inesperados.
+*/

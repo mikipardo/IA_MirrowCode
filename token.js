@@ -28,9 +28,8 @@ const authorizationUri = oauth2.authorizationCode.authorizeURL({
 });
 
 console.log('Autoriza esta aplicación visitando esta URL:', authorizationUri);
-Generamos una URL de autorización que el usuario debe visitar para autorizar la aplicación. Esta URL incluye la URL de redirección, los ámbitos solicitados y un estado aleatorio para seguridad.
-javascript
-Copy code
+//Generamos una URL de autorización que el usuario debe visitar para autorizar la aplicación. Esta URL incluye la URL de redirección, los ámbitos solicitados y un estado aleatorio para seguridad.
+
 const tokenConfig = {
   code: 'el_codigo_de_autorizacion_recibido',
   redirect_uri: 'http://localhost:3000/callback'

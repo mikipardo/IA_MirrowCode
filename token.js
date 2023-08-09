@@ -84,3 +84,18 @@ async function connectToImap() {
 connectToImap();
 //Finalmente, llamamos a la función connectToImap para iniciar el proceso de conexión IMAPS.
 //Recuerda que este es un ejemplo simplificado y que en una aplicación real, deberías manejar de manera más segura las credenciales, las URLs de redirección y el manejo de tokens.
+
+// NOTAS ANEXO
+
+/*
+La línea state: 'una_cadena_aleatoria_generada' se refiere al parámetro "state" en el flujo de autorización OAuth 2.0. Este parámetro se utiliza para mantener la seguridad y la integridad de la comunicación entre tu aplicación y el servidor de autorización durante el proceso de autorización.
+
+La idea detrás del parámetro "state" es que tu aplicación genere una cadena aleatoria única antes de redirigir al usuario a la página de autorización. Luego, cuando el usuario vuelve a tu aplicación después de autorizar o denegar el acceso, el servidor de autorización incluye este mismo parámetro "state" en la respuesta de redirección. Tu aplicación debe comparar el valor recibido con el valor original que generó para asegurarse de que la respuesta provenga del servidor de autorización al que originalmente envió la solicitud.
+
+En resumen, el uso del parámetro "state" ayuda a prevenir ataques CSRF (Cross-Site Request Forgery) al asegurarse de que las respuestas de autorización provengan de una solicitud legítima de tu aplicación y no de un atacante.
+
+Así que, en la línea state: 'una_cadena_aleatoria_generada', deberías reemplazar 'una_cadena_aleatoria_generada' por una cadena alfanumérica aleatoria única generada por tu aplicación en cada solicitud de autorización. Esto asegurará que puedas compararla con el valor que recibes en la respuesta de autorización para verificar su legitimidad.
+
+Regenerate
+
+*/

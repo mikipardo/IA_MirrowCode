@@ -57,7 +57,7 @@ async function connectToImap() {
     host: 'outlook.office365.com',
     port: 993,
     tls: true,
-    debug: {
+    debug: {  // se supone que es para debugear por consola. algo parecido al de Java
       enabled: true
     }
   };

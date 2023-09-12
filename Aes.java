@@ -19,40 +19,14 @@ public class AES_Utils {
    *         Java. Todas las funciones tienen implementadas clases nativas de Java, excepto para
    *         generar la CMAC, que necesita la librería externa "bouncycastle".
    */
-  private final static String message =
-      "D6C90D7E5F57FC31F6C09C89981BBF9BDB23CD6E4BB6A0C6D6C9C53D763C92D375478C501A5ECBB1477FDE913CCA419F8D742389AEDBF4EAF70EC410";
-  
-  private final static String clave_aes =
-      "ADC2111111110101ADC2111111110202ADC2111111110303ADC2111111110404";
 
   public static void main(String[] args) throws Exception {
-    Security.setProperty("crypto.policy", "unlimited");
 
-
-//     System.out.println(generate_cmac_aes(args));
-//     System.out.println(getPinBlock(args));
-//     System.out.println(getPin(args));
-    System.err.println("Generate Cmac Aes:");
-    System.out.println(generate_cmac_aes(new String[] {message, clave_aes}));
-    Thread.sleep(1000);
     System.err.println("Encrypt:");
-    System.out.println(encryptAESConPadding(new String  [] {message, clave_aes}));
-
-    String encryptData = encryptAESConPadding(new String  [] {message, clave_aes});
+    System.out.println(encryptAESConPadding(args));
+    String encryptData = encryptAESConPadding(args);
     System.err.println("Desencypt:");
-    System.out.println(desencryptAESConPadding(new String  [] {encryptData, clave_aes}));
-    
-    
-    //******************************
-    System.out.println("\nAntiguas funciones\n");
-    String bloquePINclaro = "449922AAAAAAAAAA9C7C71E03DCFFD48";
-    String bloquePANclaro = "44506099990020102000000000000000";
-    String claveCifrado = "ADC2333333330101ADC2333333330202";
-
-    
-    System.out.println(getPinBlock(new String  [] {bloquePINclaro,bloquePANclaro,claveCifrado}));
-    //2F8155BE6E995EA4477B93008B64490A
-    System.err.println(getPin(new String  [] {"063CA1610AE7C444641B0AA100FEAD0C",bloquePANclaro,claveCifrado}));
+    System.out.println(desencryptAESConPadding(new String[] {encryptData, args[1]}));
   }
 
   // método para generar una CMAC cifrada en AES-128
@@ -80,7 +54,7 @@ public class AES_Utils {
     }
     resultado = sb.toString();
 
-//    System.out.println(resultado);
+    // System.out.println(resultado);
     return resultado;
   }
 
@@ -162,7 +136,7 @@ public class AES_Utils {
 
       return pinBlock;
     } catch (Exception e) {
-      System.err.println("algo va mal"+e);
+      System.err.println("algo va mal" + e);
       return "";
     }
   }
@@ -211,7 +185,7 @@ public class AES_Utils {
 
   // método para descifrar una cadena cifrada en AES (por ejemplo, un PIN) con una clave en AES
   public static String desencryptAES(String cadenaCifrada, String claveCifrado) throws Exception {
-   
+
     byte[] claveBytes = DatatypeConverter.parseHexBinary(claveCifrado);
 
     SecretKeySpec secretKey = new SecretKeySpec(claveBytes, "AES");
@@ -229,13 +203,13 @@ public class AES_Utils {
     String cadena = sb.toString();
     return cadena;
   }
-  
-  // método para cifrar un PIN con una clave AES
-  public static String encryptAESConPadding(String [] args ) throws Exception {
 
-    String cadenaEnClaro=args[0];
-    String claveCifrado=args[1];
-    
+  // método para cifrar una cadena cifrada en AES (256)
+  public static String encryptAESConPadding(String[] args) throws Exception {
+    Security.setProperty("crypto.policy", "unlimited");
+    String cadenaEnClaro = args[0];
+    String claveCifrado = args[1];
+
     byte[] claveBytes = hexStringToByteArray(claveCifrado);
 
     SecretKeySpec secretKey = new SecretKeySpec(claveBytes, "AES");
@@ -250,12 +224,12 @@ public class AES_Utils {
     return cadenaCifrada;
   }
 
-  // método para descifrar una cadena cifrada en AES (por ejemplo, un PIN) con una clave en AES
-  public static String desencryptAESConPadding(String [] args ) throws Exception {
-    
-    String cadenaEnCifrada=args[0];
-    String claveCifrado=args[1];
-    
+  // método para descifrar una cadena cifrada en AES (256)
+  public static String desencryptAESConPadding(String[] args) throws Exception {
+    Security.setProperty("crypto.policy", "unlimited");
+    String cadenaEnCifrada = args[0];
+    String claveCifrado = args[1];
+
 
     byte[] claveBytes = DatatypeConverter.parseHexBinary(claveCifrado);
 

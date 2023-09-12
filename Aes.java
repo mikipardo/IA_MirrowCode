@@ -24,6 +24,9 @@ public class AES_Utils {
      System.out.println(generate_cmac_aes(args));
      System.out.println(getPinBlock(args));
      System.out.println(getPin(args));
+     System.out.println(desencryptAES("D6C90D7E5F57FC31F6C09C89981BBF9BDB23CD6E4BB6A0C6D6C9C53D763C92D375478C501A5ECBB1477FDE913CCA419F8D742389AEDBF4EAF70EC410", 
+                                      "ADC2111111110101ADC2111111110202ADC2111111110303ADC2111111110404"));
+
 
   }
 
